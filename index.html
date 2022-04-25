@@ -1,0 +1,364 @@
+    <!-- PIZZA HUB BY JULIO MELO -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pizza Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="img/ico.ico">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Nome da pizzaria -->
+    <div>
+        <span class="errormsg noprint" id="msgerror">Ops! , é necessario selecionar todos os sabores para a pizza.</span> <!--MSG DE ERRO-->
+
+    </div>
+    <div class="caixa">
+        <img src="img/pizzaHUB.png" alt="Pizza HUB" class="hub">
+        <div class="textocentral" id="nomepizzaria"></div>
+    </div>
+    <!-- formulario de cadastro de pizza -->
+    
+    <div class="PizzaConfig" id="3"> <!--Div principal central-->
+        <form class="formularioPizza" onclick="" style="border: solid 1px; border-color: white;" class="">
+            <h3 class="">Pedido:</h3>
+            <img src="img/esquerda.png" style="width: 70px; height: 95px;" class="img noprint" id="imgesquerda"><img src="img/direita.png" style="width: 70px; height: 95px;" class="img noprint" id="imgdireita"><br>
+            <div class="dentro">
+                <select class="selecao noprint" id="selecao1" style="width: 300px; height: 50px;" onchange="showprecos()">
+                    <option value="0" disabled selected hidden>Selecione o Sabor ½:</option>
+                    <option value="1">Muçarela</option>
+                    <option value="2">Calabresa</option>
+                    <option value="3">Portuguesa</option>
+                    <option value="4">Frango</option>
+                    <option value="5">Frango C/ Catupiry</option>
+                    <option value="6">Frango C/ Muçarela</option>
+                    <option value="7">Atum</option>
+                    <option value="8">Napolitana</option>
+                    <option value="9">Americana</option>
+                    <option value="10">Camarão</option>
+                    <option value="11">Pepperoni</option>
+                    <option value="12">Quatro queijos</option>
+                </select><label class="noprint"> +</label>
+                <select class="selecao noprint" id="selecao2" style="width: 300px; height: 50px;" onchange="showprecos()">
+                    <option value="0" disabled selected hidden>Selecione o Sabor ½:</option>
+                    <option value="1">Muçarela</option>
+                    <option value="2">Calabresa</option>
+                    <option value="3">Portuguesa</option>
+                    <option value="4">Frango</option>
+                    <option value="5">Frango C/ Catupiry</option>
+                    <option value="6">Frango C/ Muçarela</option>
+                    <option value="7">Atum</option>
+                    <option value="8">Napolitana</option>
+                    <option value="9">Americana</option>
+                    <option value="10">Camarão</option>
+                    <option value="11">Pepperoni</option>
+                    <option value="12">Quatro queijos</option>
+                </select>
+                <br><br>
+                <input type="button" value="Adicionar" class="botoes noprint" onclick="adicionar()">
+                <input type="button" value="Limpar" class="botaolimpar noprint" onclick="limpar()">
+                <ul id="lista" class="pizzaadd">
+                    
+                    </ul><br>
+                <br><textarea type='text' id="observacao" style="border: none; display: inline-flexbox; width: 500px; height: 200px; font-size: x-large;" placeholder="Observaçoes do pedido." class="noprint"></textarea><br><br>
+                <h3 class="">Endereço para entrega:</h3>
+                <form onclick="name();">
+                    <label class="noprint">Endereço:</label><input type="text" id="endereco_entrega" class="formulario noprint" onchange="this.setAttribute('value', this.value)" placeholder="Endereço para entrega" maxlength="80"><br>
+                    <label class="noprint">Celular:&nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" id="celular_cliente" class="formulario noprint" placeholder="Numero do celular" maxlength="9"><br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="botoes noprint" value="Fechar Pedido" onclick="finalizarpedido()">
+                </form>
+            </div>
+            <div class="idprint">
+                <p id="end" class="print" style="font-size: 150%;"></p><br>
+                <p id="cel" class="print" style="font-size: 150%;"></p><br>
+                <p id="valorprint" class="print" style="font-size: 150%;"><b></b></p>
+            </div>
+    </div>
+    <!-- scripts -->
+    <script>// funcao para salvar o nome da pizzaria no localstorage.
+    var npizas = 0; // NUMERO TOTAL DE PIZZAS ADICIONADAS
+    var imgleft = document.getElementById("imgesquerda")
+    var imgright = document.getElementById("imgdireita")
+    var preco = 0; // PRECO1 MEIA METADE DA PIZZA
+    var preco2 = 0; // PRECO2 MEIA METADE DA PIZZA
+    var precofinal = 0; // PRECO FINAL DE CADA PIZZA
+    var Observacoes = " Observacao"
+    var opcao1 = document.getElementById("selecao1");
+    var opcao2 = document.getElementById("selecao2");
+    var opcao1selecionada = opcao1.options[opcao1.selectedIndex].text;
+    var opcao2selecionada = opcao2.options[opcao2.selectedIndex].text;
+    var pizza1, pizza2, pizza3, pizza4, pizza5, pizza6, pizza7, pizza8, pizza9, pizza10; // NUMERO MAXIMO DE PIZZAS
+    var endereco, celular; // ENDEREÇO PARA ENTREGA
+    var ultimopreco = 0; // PRECO TOTAL DE TODAS AS PIZZAS 
+    
+    if (localStorage.getItem("nome")== null){
+        var nomepizzaria = prompt("Nome da pizzaria: ");
+        if (nomepizzaria != null){
+            document.getElementById("nomepizzaria").innerText = nomepizzaria;
+            localStorage.setItem("nome",nomepizzaria);
+        }
+    }else{
+        document.getElementById("nomepizzaria").innerText = localStorage.getItem("nome");
+    } ///////////////////////////////////////////////////////////////////////////////
+    function adicionar() { // funcao que mostra as pizzas adicionadas na tela
+    Observacoes = document.getElementById("observacao").value;
+    precofinal = (preco+preco2);
+    var opcao1 = document.getElementById("selecao1");
+    var opcao2 = document.getElementById("selecao2");
+    var opcao1selecionada = opcao1.options[opcao1.selectedIndex].text;
+    var opcao2selecionada = opcao2.options[opcao2.selectedIndex].text;
+    var pizzametade = ("Pizza meio " + opcao1selecionada + " e meio de " + opcao2selecionada + " Valor R$ " + precofinal + " Reais." + " Obs: " + Observacoes); //variavel
+    var pizzaCompleta = ("Pizza inteira de " + opcao1selecionada + " Valor R$ " + precofinal + " Reais." + " Obs: " + Observacoes); //variavel
+    var ul = document.getElementById("lista");
+    var li = document.createElement("li");
+    ultimopreco = (ultimopreco + precofinal);
+
+    
+    if (opcao1selecionada == opcao2selecionada && precofinal != 0){ //metades iguais = pizza completa
+        li.appendChild(document.createTextNode(pizzaCompleta)); //condicao 1 apos adicionar
+        ul.appendChild(li);
+        document.getElementById("msgerror").style.display= "none";
+        document.getElementById("lista").style.display = "block";
+        document.getElementById("observacao").value = ""
+        //document.getElementById("finalizapedidobotao").style.display = "inline";
+        salvarnamemoria()
+
+        
+        //precofinal = 0; //preco final ao juntar pizzas
+
+    }else if ((opcao1.selectedIndex == 0) || (opcao2.selectedIndex == 0)) {
+        //error mensagem show dive
+        document.getElementById("msgerror").style.display= "block"; //ERRO NA HORA DE ADICIONAR AS PIZZAS
+        document.getElementById("msgerror").scrollIntoView();
+        
+        
+        
+        precofinal = 0;
+    }else{
+        li.appendChild(document.createTextNode(pizzametade)); //metades diferentes pizza meio
+        ul.appendChild(li);
+        document.getElementById("msgerror").style.display = "none";
+        document.getElementById("lista").style.display = "block";
+        document.getElementById("observacao").value = ""
+
+        salvarnamemoria()
+        //document.getElementById("finalizapedidobotao").style.display = "inline";
+       
+       
+        //precofinal = 0; //preco final ao juntar pizzas
+
+        // adicionar variavel $precofinal a outra variavel que ficara oculta e recebera $preco final a cada clique.
+    }
+
+} /////////////////////////////////////////////////
+    function precos(){ // funcao para somar o preço de cada metade das pizzas
+        var preco1 = document.getElementById("selecao1");
+        var preco2 = document.getElementById("selecao2");
+        var precoselecionado1 = preco1.options[preco1.selectedIndex].value;
+        var precoselecionado2 = preco2.options[preco2.selectedIndex].value;
+        var juntas = (precoselecionado1) + (precoselecionado2);
+        //console.log(juntas); // NAO PRECISO JUNTAR AS DUAS, APENAS DEIXAR O VALOR PARA CADA OPCAO E DEPOIS APENAS SOMAR O VALOR DE CADA OPCAO 06:36 19/04/2022
+    }
+    function showprecos(){ //funcao para calcular os preços finais da pizza // e trocar imagem da pizza central
+        var pizza1preco = document.getElementById('selecao1')
+        var pizza2preco = document.getElementById('selecao2')
+        var indexpizza1preco = pizza1preco.options[pizza1preco.selectedIndex].value;
+        var indexpizza2preco = pizza2preco.options[pizza2preco.selectedIndex].value;
+        //console.log('changed');
+        //console.log(indexpizza1preco);
+        //console.log(indexpizza2preco);
+        if (indexpizza1preco == 1){ //left
+            preco = mucarela;
+            //console.log(preco);
+            imgleft.src = "img/Emucarela.png";
+        }else if (indexpizza1preco == 2){
+            preco = calabresa;
+            //console.log(preco);
+            imgleft.src = "img/Ecalabresa.png";
+        }else if (indexpizza1preco == 3){
+            preco = portuguesa;
+            //console.log(preco);
+            imgleft.src = "img/Eportuguesa.png";
+        }else if (indexpizza1preco == 4){
+            preco = frango;
+            //console.log(preco);
+            imgleft.src = "img/Efrango.png";
+        }else if (indexpizza1preco == 5){
+            preco = frangocatupiri;
+            //console.log(preco);
+            imgleft.src = "img/Efrangocatupiri.png";
+        }else if (indexpizza1preco == 6){
+            preco = frangomussarela;
+            //console.log(preco);
+            imgleft.src = "img/Efrangomussa.png";
+        }else if (indexpizza1preco == 7){
+            preco = atum;
+            //console.log(preco);
+            imgleft.src = "img/Eatum.png";
+        }else if (indexpizza1preco == 8){
+            preco = napolitana;
+            //console.log(preco);
+            imgleft.src = "img/Enapolitana.png";
+        }else if (indexpizza1preco == 9){
+            preco = americana;
+            //console.log(preco);
+            imgleft.src = "img/Eamericana.png";
+        }else if (indexpizza1preco == 10){
+            preco = camarao;
+            //console.log(preco);
+            imgleft.src = "img/Ecamarao.png";
+        }else if (indexpizza1preco == 11){
+            preco = pepperoni;
+            //console.log(preco);
+            imgleft.src = "img/Epeperoni.png";
+        }else if (indexpizza1preco == 12){
+            preco = quatroqueijos;
+            //console.log(preco);
+            imgleft.src = "img/Equatroqueijos.png";
+        }else {
+
+        }
+        if (indexpizza2preco == 1){
+            preco2 = mucarela;
+            imgright.src = "img/Dmucarela.png";
+            //console.log(preco2);
+        }else if (indexpizza2preco == 2){
+            preco2 = calabresa;
+            imgright.src = "img/Dcalabresa.png";
+            //console.log(preco2);
+        }else if (indexpizza2preco == 3){
+            preco2 = portuguesa;
+            imgright.src = "img/Dportuguesa.png";
+            //console.log(preco2);
+        }else if (indexpizza2preco == 4){
+            preco2 = frango;
+            imgright.src = "img/Dfrango.png";
+            //console.log(preco2);
+        }else if (indexpizza2preco == 5){
+            preco2 = frangocatupiri;
+            imgright.src = "img/Dfrangocatupiri.png";
+            //console.log(preco2);
+        }else if (indexpizza2preco == 6){
+            preco2 = frangomussarela;
+            imgright.src = "img/Dfrangomussa.png";
+            //console.log(preco2);
+        }else if (indexpizza2preco == 7){
+            preco2 = atum;
+            imgright.src = "img/Datum.png";
+            //console.log(preco2);
+        }else if (indexpizza2preco == 8){
+            preco2 = napolitana;
+            //console.log(preco2);
+            imgright.src = "img/Dnapolitana.png";
+        }else if (indexpizza2preco == 9){
+            preco2 = americana;
+            //console.log(preco2);
+            imgright.src = "img/Damericana.png";
+        }else if (indexpizza2preco == 10){
+            preco2 = camarao;
+            //console.log(preco2);
+            imgright.src = "img/Dcamarao.png";
+        }else if (indexpizza2preco == 11){
+            preco2 = pepperoni;
+            //console.log(preco2);
+            imgright.src = "img/Dpeperoni.png";
+        }else if (indexpizza2preco == 12){
+            preco2 = quatroqueijos;
+            //console.log(preco2);
+            imgright.src = "img/Dquatroqueijos.png";
+        } ///////////////////////////////////////
+    }
+    function limpar(){
+        document.location.reload(true);
+        precofinal = 0;
+    }
+    function finalizarpedido(){
+        //finaliza o pedido
+        var a = "|| ";
+        endereco = document.getElementById('endereco_entrega').value;
+        celular = document.getElementById('celular_cliente').value;
+        console.log(endereco,celular);
+        var finalizacao = {
+            Pedido : pizza1 + a + pizza2 + a + pizza3 + a + pizza4 + a + pizza5 + a + pizza6 + a + pizza7 + a + pizza8 + a + pizza9 + a + pizza10,
+            valor : ultimopreco,
+            Entrega : endereco,
+            telefone : celular
+        };
+        console.log(finalizacao);
+        let confirmacao = confirm(npizas + " Pizza(s) valor total de: " + ultimopreco + "R$" + ", Deseja finalizar o pedido?");
+        if (confirmacao) {
+            var zz1 = "Endereço: "
+            var zz2 = "Celular: "
+            var verx = document.getElementById("endereco_entrega").value;
+            var verz = document.getElementById("celular_cliente").value;
+
+            if (verx != "" && verz != ""){
+                document.getElementById("end").innerText = (zz1 + endereco);
+                document.getElementById("cel").innerText = (zz2 + celular);
+                document.getElementById("valorprint").innerText = ("VALOR: " + ultimopreco + "R$")
+                /// FINALIZA O PEDIDO AQUI 
+                window.print();
+                location.reload();
+            }else{
+                alert("Preencha todos os campos de Endereço e Celular do cliente.")
+            }
+        }else{
+            
+        }
+    }
+    function salvarnamemoria(){
+        var opcao1selecionada = opcao1.options[opcao1.selectedIndex].text;
+        var opcao2selecionada = opcao2.options[opcao2.selectedIndex].text;
+        if (npizas == 0){
+            pizza1 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            console.log(pizza1)////
+            npizas++;
+            console.log(ultimopreco);
+        }else if(npizas == 1){
+            pizza2 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            console.log(pizza1)/////
+            console.log(pizza2)//////
+            console.log(ultimopreco);
+            npizas++;
+        }else if(npizas == 2){
+            pizza3 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            console.log(pizza1)///
+            console.log(pizza2)///
+            /console.log(pizza3)////
+            console.log(ultimopreco);
+            npizas++;
+        }else if(npizas == 3 ){
+            pizza4 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            npizas++;
+        }else if(npizas == 4){
+            pizza5 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            npizas++;
+        }
+        else if(npizas == 5){
+            pizza6 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            npizas++;
+        }
+        else if(npizas == 6){
+            pizza7 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            npizas++;
+        }
+        else if(npizas == 7){
+            pizza8 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            npizas++;
+        }
+        else if(npizas == 8){
+            pizza9 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            npizas++;
+        }
+        else if(npizas == 9){
+            pizza10 = "Pizza meio " + opcao1selecionada + " e meio " + opcao2selecionada + " OBS: "+ Observacoes;
+            npizas++;
+        }else{
+            window.alert('Maximo de 10 pizzas permitidas, a pizza de numero 11 NÃO será considerada no VALOR FINAL.')
+        }
+        
+
+    }
+    </script>
+</body>
+</html>

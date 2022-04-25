@@ -1,0 +1,174 @@
+html {
+    scroll-behavior: smooth;
+  }
+
+body {
+    background-image: url("img/pizza.jpeg");
+    background-size: 100vw 100vh;
+
+}
+form {
+    width: 80%;
+    margin: 0 auto;
+    align-content: center;
+    align-self: start;
+}
+.divisao{
+    display: grid;
+    justify-content: center;
+    left: -50%;
+    margin-right: 7%;
+    color: #000;
+    
+}
+.formulario{
+    color: rgb(0, 0, 0);
+    border: solid 2px white;
+    border: 0ex;
+    width: 30%;
+    padding: 12px 20px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    font-size: 120%;
+    background-color: rgb(255, 255, 255);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+label{
+    color: rgb(255, 254, 254);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.inputs{
+    border: 0ex;
+    width: 160%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 120%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+}
+.hub{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+}
+.caixa {
+    position: relative;
+    text-align: center;
+    color: rgb(252, 16, 16);
+    color: black;
+    -webkit-text-fill-color: red;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+.textocentral {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 260%;
+    font-family:  "Comic Sans MS", "Comic Sans", cursive;
+    /* background: rgba(255, 255, 255, 0); */
+    /* backdrop-filter: blur( 1px ); */
+    font-weight: bold;
+    padding-top: 5.50%;
+  }
+.formularioPizza{
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur( 10px );
+    -webkit-backdrop-filter: blur( 10px );
+    align-content: center;
+    position: relative;
+    text-align: center;
+
+}
+h3 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: oblique;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+.PizzaConfig{
+    right: 300px;
+    size: 3000px;
+}
+.selecao{
+    position: relative;
+    font-family: Arial;
+    font-size: x-large;
+    align-content: center;
+    text-align: center;
+    list-style-position: inside;
+}
+.selecao option{
+    size: 1200%;
+    position: relative;
+    font-family: Arial;
+    width:150px;
+}
+.dentro{
+    align-content: center;
+    position: relative;
+    align-self: center;
+    text-align: center;
+}
+.img{
+    display: relative;
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+}
+.botoes{
+    border: none; 
+    color: white; 
+    background-color: green; 
+    padding: 15px 32px; 
+    font-size: 16px;
+}
+.botoes:hover{
+    background-color: rgb(71, 182, 90);
+}
+ul{
+    list-style-type: decimal;
+}
+.pizzaadd{
+    font-size: larger;
+    border: solid 1px green;
+    display: none;
+    border-collapse: separate;
+    border-style: dashed;
+}
+.errormsg{
+    font-size: larger;
+    border: solid 2px rgba(0, 0, 0, 0.877);
+    background-color: red;
+    color: rgb(0, 0, 0);
+    display: none;
+}
+.botaolimpar{
+    color: white; 
+    background-color: brown; 
+    padding: 15px 32px; 
+    border: none; 
+    font-size: 16px;
+}
+.botaolimpar:hover{
+    background-color: rgb(192, 51, 51); 
+
+}
+ul {
+    text-align: center;
+    list-style-position: inside;
+}
+@media print {
+    .noprint {display:none;}
+    #print {display: flex;}
+    #h3 {font-size: 120%;}
+}
+.idprint{
+    align-content: center;
+    display: contents;
+    text-align: center;
+    padding: auto;
+}
