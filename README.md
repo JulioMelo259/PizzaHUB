@@ -1,12 +1,10 @@
 # PizzaHUB
-![videodemostracao](https://iili.io/V4cKJI.gif)<br><br>
-
-![PizzaHUB](https://iili.io/V47ZqQ.png)
-<h2>Sistema para criação de pedidos automatizado para pizzaria.</h2>
-
+<h2>Sistema para criação de pedidos automatizado para pizzaria.</h2><br>
 Desenvolvido Utilizando Apenas HTML, Javascript, CSS e Python3+.<br>
 Esta aplicação WEB permite ao seu usuário criar ordens de pedidos, E gerenciá-las rapidamente.<br>
-Ao final de cada pedido é gerado um arquivo PDF para que seu usuário possa administrá-lo da maneira que bem entender.
+Ao final de cada pedido é gerado um arquivo PDF para que seu usuário possa administrá-lo da maneira que bem entender.<br>
+
+![videodemostracao](https://iili.io/V4cKJI.gif)
 
 <b>Personalização do Nome da pizzaria:</b><br><br>
 ![Personalizar Nome Pizzaria Exemplo](https://iili.io/V47sXj.png)
